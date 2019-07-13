@@ -1,0 +1,161 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Sign Up!
+    </div>
+
+    <div class="panel-body">
+        <form class="form-horizontal"
+                novalidate
+                [formGroup] ="customerForm"
+                (ngSubmit)="save()">
+
+                <fieldset>
+                    <div class="form-group" 
+                        [ngClass]="{'has-error' : (customerForm.get('firstName').touched
+                                                || customerForm.get('firstName').dirty) 
+                                                && !customerForm.get('firstName').valid}">
+                        <label class="col-md-2 control-label">First Name</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="firstNameID"
+                                placeholder=" Enter First Name "
+                                formControlName="firstName"
+                                />
+                        </div> 
+                        <span class="help-block" *ngIf="(customerForm.get('firstName').touched || customerForm.get('firstName').dirty) 
+                                                    && !customerForm.get('firstName').valid ">
+                            <span *ngIf="customerForm.get('firstName').errors.required">
+                                    Please enter first name
+                            </span>  
+                            <span *ngIf="customerForm.get('firstName').errors.minlength">
+                                Minimum characters required are 5
+                            </span>           
+                        </span>
+                    </div>
+
+                    <div class="form-group" 
+                    [ngClass]="{'has-error' : (customerForm.get('lastName').touched
+                                            || customerForm.get('lastName').dirty) 
+                                            && !customerForm.get('lastName').valid}">
+                    <label class="col-md-2 control-label">Last Name</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="lastNameID"
+                            placeholder=" Enter last Name "
+                            formControlName="lastName"
+                            />
+                    </div> 
+                    <span class="help-block" *ngIf="(customerForm.get('lastName').touched 
+                                                || customerForm.get('lastName').dirty) 
+                                                && !customerForm.get('lastName').valid ">
+                        <span *ngIf="customerForm.get('lastName').errors.required">
+                                Please enter first name
+                        </span>  
+                        <span *ngIf="customerForm.get('lastName').errors.minlength">
+                            Minimum characters required are 3
+                        </span>           
+                    </span>
+                </div>
+
+                <div class="form-group"
+                    [ngClass]="{'has-error' : (customerForm.get('email').touched
+                    || customerForm.get('email').dirty) 
+                    && !customerForm.get('email').valid}">
+                    <label class="col-md-2 control-label">Email</label>
+                    <div class="col-md-8">
+                        <input type="email" class="form-control" id="emailId"
+                        required  formControlName="email" pattern="[a-z0-9._%+-]+@[a-z0-9._]+"/>
+                    </div>
+                    
+
+                    <span class="help-block" *ngIf="(customerForm.get('email').touched ||customerForm.get('email').dirty) 
+                                                    && customerForm.get('email').errors">
+                        <span *ngIf="customerForm.get('email').errors.required">
+                            Please enter your email
+                        </span>
+                        <span *ngIf="customerForm.get('email').errors.pattern">
+                            Please enter a valid email address
+                        </span>
+                    </span>
+
+                </div>
+
+                <div class="form-group" 
+                [ngClass]="{'has-error' : !customerForm.get('phone').valid}">
+                <label class="col-md-2 control-label">Phone</label>
+                <div class="col-md-8">
+                    <input type="tel" class="form-control" id="phoneId"
+                        placeholder="phone"
+                        formControlName="phone"
+                        />
+                </div> 
+                <span class="help-block" *ngIf="customerForm.get('phone').errors">
+                    <span *ngIf="customerForm.get('phone').errors.required">
+                            Please phone number
+                    </span>           
+                </span>
+            </div>
+            <div class="form-group">
+                    <label class="col-md-2 control-label">Send Notification</label>
+                    <div class="col-md-8">
+                        <label class="radio-inline">
+                            <input type="radio"
+                                    value="email"
+                                    formControlName="notification"
+                                    (click)="setNotification('email')">Email
+                        </label>
+                        <label class="radio-inline">
+                                <input type="radio"
+                                        value="text"
+                                        formControlName="notification"
+                                        (click)="setNotification('text')">Text
+                            </label>
+                    </div>
+            </div>
+
+            <div class="form-group"
+                    [ngClass]= "{'has-error': (customerForm.get('rating').touched 
+                                    || customerForm.get('rating').dirty)
+                                    && !customerForm.get('rating').valid}">
+                <label class="col-md-2 control-label">
+                    Rating
+                </label>
+                <div class="col-md-8">
+                    <input class="form-control"
+                            id="ratingID"
+                            type="text"
+                            formControlName="rating"/>
+                </div>
+                <span class="help-block" *ngIf="(customerForm.get('rating').touched 
+                                                || customerForm.get('rating').dirty) 
+                                                && customerForm.get('rating').errors">
+                    <span *ngIf="customerForm.get('rating').errors.range">
+                        Please rate between 1 to 5
+                    </span>
+                                            
+                </span>
+            </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <span>
+                                <button type="submit" class="btn btn-primary" [disabled]= !customerForm.valid>
+                                    Save
+                                </button>
+                            </span>
+                            <span>
+                                    <button type="button" class="btn btn-success" (click)="populateData()" >
+                                            Get Data
+                                        </button>
+                            </span>
+                        </div>
+
+                    </div>
+                </fieldset>
+
+        </form>
+    </div>
+</div>
+<br>Dirty: {{ customerForm.dirty }} 
+<br>Touched: {{ customerForm.touched }}
+<br>InValid: {{ customerForm.valid }}
+<br>Value: {{ customerForm.value | json }}
